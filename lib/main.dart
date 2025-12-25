@@ -12,10 +12,10 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
   // Load environment variables
-  // For dev: await dotenv.load(fileName: "env/.env.dev");
-  // For prod: await dotenv.load(fileName: "env/.env.prod");
-  // Default: loads env/.env
-  await dotenv.load(fileName: "env/.env");
+  // For dev: await dotenv.load(fileName: "env/environment.dev.env");
+  // For prod: await dotenv.load(fileName: "env/environment.env");
+  // Default: loads env/environment.env (production)
+  await dotenv.load(fileName: "env/environment.env");
   
   runApp(const MyApp());
 }

@@ -1,4 +1,3 @@
-import '../../../../core/config/environment.dart';
 import '../models/user_model.dart';
 
 /// Remote Data Source - Handles API calls
@@ -11,7 +10,7 @@ abstract class AuthRemoteDataSource {
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   @override
   Future<UserModel> login(String email, String password) async {
-    // TODO: Implement actual API call using Environment.baseUrl
+    // TODO: Implement actual API call using dotenv.env['BASE_URL_APP']
     // Example:
     // final response = await http.post(
     //   Uri.parse('${Environment.baseUrl}/auth/login'),
