@@ -1,0 +1,1 @@
+const String BASE_URL_APP = 'https://dummyjson.com';

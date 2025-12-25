@@ -1,0 +1,17 @@
+/// BLoC States - Define the different states of the UI
+abstract class LoginState {}
+
+class LoginInitial extends LoginState {}
+
+class LoginLoading extends LoginState {}
+
+class LoginSuccess extends LoginState {
+  final String userId;
+  LoginSuccess(this.userId);
+}
+
+class LoginFailure extends LoginState {
+  final String error;
+  LoginFailure(this.error);
+}
+
