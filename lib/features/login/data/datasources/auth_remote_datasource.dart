@@ -1,36 +1,50 @@
+import 'dart:convert';
+import '../../../../core/services/http_service.dart';
 import '../models/user_model.dart';
 
-/// Remote Data Source - Handles API calls
 abstract class AuthRemoteDataSource {
-  Future<UserModel> login(String email, String password);
-  Future<void> logout();
+  Future<LoginModel> login(LoginRequest request);
+  Future<LoginModel> getMe(String token);
+  Future<RefreshTokenModel> refreshToken(RefreshTokenRequest request);
 }
 
-/// Implementation example (you would implement actual API calls here)
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
+  final HttpService httpService;
+
+  AuthRemoteDataSourceImpl({required this.httpService});
+
   @override
-  Future<UserModel> login(String email, String password) async {
-    // TODO: Implement actual API call using dotenv.env['BASE_URL_APP']
-    // Example:
-    // final response = await http.post(
-    //   Uri.parse('${Environment.baseUrl}/auth/login'),
-    //   body: {'username': email, 'password': password},
-    // );
-    // return UserModel.fromJson(response.data);
-    
-    // Mock implementation for now
-    await Future.delayed(const Duration(seconds: 1));
-    return UserModel(
-      id: '1',
-      email: email,
-      name: 'User Name',
+  Future<LoginModel> login(LoginRequest request) async {
+    final response = await httpService.post(
+      baseUrlKey: 'BASE_AUTH_URL',
+      endpoint: '/auth/login',
+      body: request.toJson(),
     );
+    
+    // response.body is the raw JSON string
+    return LoginModel.fromJson(jsonDecode(response.body));
   }
 
   @override
-  Future<void> logout() async {
-    // TODO: Implement logout API call
-    await Future.delayed(const Duration(milliseconds: 500));
+  Future<LoginModel> getMe(String token) async {
+    // This call requires the Bearer token in the header
+    final response = await httpService.get(
+      baseUrlKey: 'BASE_AUTH_URL',
+      endpoint: '/auth/me',
+      token: token, // HttpService will attach this as 'Authorization': 'Bearer $token'
+    );
+    
+    return LoginModel.fromJson(jsonDecode(response.body));
+  }
+
+  @override
+  Future<RefreshTokenModel> refreshToken(RefreshTokenRequest request) async {
+    final response = await httpService.post(
+      baseUrlKey: 'BASE_AUTH_URL',
+      endpoint: '/auth/refresh',
+      body: request.toJson(),
+    );
+    
+    return RefreshTokenModel.fromJson(jsonDecode(response.body));
   }
 }
-

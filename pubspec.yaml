@@ -41,6 +41,9 @@ dependencies:
   
   # Environment variables
   flutter_dotenv: ^5.1.0
+  
+  # HTTP client
+  http: ^1.2.0
 
 dev_dependencies:
   flutter_test:
@@ -65,8 +68,8 @@ flutter:
   uses-material-design: true
   
   assets:
-    - env/environment.env
-    - env/environment.dev.env
+    - env/.env.dev
+    - env/.env.prod
 
   # To add assets to your application, add an assets section, like this:
   # assets:

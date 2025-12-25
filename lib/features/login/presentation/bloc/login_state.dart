@@ -1,17 +1,36 @@
+import 'package:equatable/equatable.dart';
+import '../../domain/entities/user.dart';
+
 /// BLoC States - Define the different states of the UI
-abstract class LoginState {}
+abstract class LoginState extends Equatable {
+  const LoginState();
 
-class LoginInitial extends LoginState {}
+  @override
+  List<Object?> get props => [];
+}
 
-class LoginLoading extends LoginState {}
+class LoginInitial extends LoginState {
+  const LoginInitial();
+}
+
+class LoginLoading extends LoginState {
+  const LoginLoading();
+}
 
 class LoginSuccess extends LoginState {
-  final String userId;
-  LoginSuccess(this.userId);
+  final UserEntity user;
+
+  const LoginSuccess(this.user);
+
+  @override
+  List<Object?> get props => [user];
 }
 
-class LoginFailure extends LoginState {
-  final String error;
-  LoginFailure(this.error);
-}
+class LoginError extends LoginState {
+  final String message;
 
+  const LoginError(this.message);
+
+  @override
+  List<Object?> get props => [message];
+}

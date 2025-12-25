@@ -1,18 +1,16 @@
 import '../entities/user.dart';
 import '../repositories/auth_repository.dart';
 
-/// Use Case - Contains business logic for a specific operation
 class LoginUseCase {
   final AuthRepository repository;
 
   LoginUseCase(this.repository);
 
-  Future<User> call(String email, String password) {
-    // Business logic validation can go here
-    if (email.isEmpty || password.isEmpty) {
-      throw Exception('Email and password cannot be empty');
+  Future<UserEntity> execute(String username, String password) async {
+    // Business Rule: Validation happens here before hitting the repo
+    if (username.trim().isEmpty || password.trim().isEmpty) {
+      throw Exception("Username and password are required.");
     }
-    return repository.login(email, password);
+    return await repository.login(username, password, 30);
   }
 }
-

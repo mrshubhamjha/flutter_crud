@@ -1,25 +1,24 @@
-/// Domain Entity - Pure business logic, no dependencies on external frameworks
-class User {
-  final String id;
+class UserEntity {
+  final int id;
+  final String username;
   final String email;
-  final String name;
+  final String firstName;
+  final String lastName;
+  final String image;
+  final String? accessToken;
+  final String? refreshToken;
 
-  const User({
+  UserEntity({
     required this.id,
+    required this.username,
     required this.email,
-    required this.name,
+    required this.firstName,
+    required this.lastName,
+    required this.image,
+    this.accessToken,
+    this.refreshToken,
   });
 
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is User &&
-          runtimeType == other.runtimeType &&
-          id == other.id &&
-          email == other.email &&
-          name == other.name;
-
-  @override
-  int get hashCode => id.hashCode ^ email.hashCode ^ name.hashCode;
+  // Business helper (Computed property)
+  String get fullName => '$firstName $lastName';
 }
-
